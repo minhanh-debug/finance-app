@@ -19,7 +19,13 @@ app.use('/api/debts', require('./routes/debts'));
 app.use('/api/settings', require('./routes/settings'));
 
 // Health check
-app.get('/api/health', (req, res) => res.json({ status: 'ok' }));
+app.get('/api/health', (req, res) => res.json({ status: 'ok', db: process.env.DATABASE_URL ? 'set' : 'missing' }));
+
+// Error logging middleware
+app.use((err, req, res, next) => {
+  console.error('Express error:', err.message);
+  res.status(500).json({ error: err.message });
+});
 
 // Fallback to frontend
 app.get('*', (req, res) => {
