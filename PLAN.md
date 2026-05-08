@@ -20,8 +20,8 @@ Railway               ← Deploy (Node.js service + PostgreSQL)
 - [x] Viết REST API routes: /api/transactions, /api/incomes, /api/debts, /api/settings
 - [x] Migrate frontend: bỏ Firebase, kết nối API riêng
 - [x] Tạo README.md, CLAUDE.md, PLAN.md
-- [ ] Push lên GitHub
-- [ ] Deploy lên Railway (PostgreSQL + Node.js service)
+- [x] Push lên GitHub → https://github.com/minhanh-debug/finance-app
+- [x] Deploy lên Railway (PostgreSQL Online, backend deploying)
 
 ## API Endpoints
 
