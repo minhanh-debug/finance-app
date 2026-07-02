@@ -2289,7 +2289,7 @@ function initApp() {
   document.body.style.opacity = '0.5';
 
   // Thử load từ cloud trước
-  const cloudLoaded = await loadFromCloud();
+  const cloudLoaded = await loadFromAPI();
 
   if (cloudLoaded) {
     // Có data cloud → dùng luôn, không seed
