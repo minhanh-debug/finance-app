@@ -1,7 +1,6 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
-const path = require('path');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -9,8 +8,8 @@ const PORT = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 
-// Serve frontend
-app.use(express.static(path.join(__dirname, 'public')));
+// Chi la API server (frontend deploy rieng). Route goc de bao song.
+app.get('/', (req, res) => res.json({ service: 'finance-app API', status: 'ok' }));
 
 // API routes
 app.use('/api/transactions', require('./routes/transactions'));
@@ -34,11 +33,6 @@ app.get('/api/health', async (req, res) => {
 app.use((err, req, res, next) => {
   console.error('Express error:', err.message);
   res.status(500).json({ error: err.message });
-});
-
-// Fallback to frontend
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public/index.html'));
 });
 
 app.listen(PORT, () => {

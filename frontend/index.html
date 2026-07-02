@@ -1166,7 +1166,7 @@ const DEFAULT_LIMITS = {
 // ─────────────────────────────────────
 // API
 // ─────────────────────────────────────
-const API = window.location.origin + '/api';
+const API = 'https://backend-production-a04b.up.railway.app/api';
 
 async function apiFetch(path, options = {}) {
   const res = await fetch(API + path, {
