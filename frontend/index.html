@@ -836,6 +836,12 @@ input[type="date"]::-webkit-datetime-edit-year-field:focus {
               <th style="text-align:right">Tháng 4</th>
               <th style="text-align:right">Tháng 5</th>
               <th style="text-align:right">Tháng 6</th>
+              <th style="text-align:right">Tháng 7</th>
+              <th style="text-align:right">Tháng 8</th>
+              <th style="text-align:right">Tháng 9</th>
+              <th style="text-align:right">Tháng 10</th>
+              <th style="text-align:right">Tháng 11</th>
+              <th style="text-align:right">Tháng 12</th>
               <th></th>
             </tr>
           </thead>
@@ -1713,20 +1719,21 @@ function renderThunhap() {
 
   // sources × months
   const sources = [...new Set(state.incomes.map(i => i.source))];
-  const months6 = [];
-  for (let m = 0; m < 6; m++) {
-    const d = new Date(parseInt(year), m, 1);
-    months6.push(d.toISOString().slice(0,7));
+  // Đủ 12 tháng. KHÔNG dùng new Date().toISOString() ở đây: VN là UTC+7 nên
+  // new Date(2026,0,1) quy ra UTC thành 2025-12 -> lệch nguyên 1 tháng.
+  const months12 = [];
+  for (let m = 1; m <= 12; m++) {
+    months12.push(`${year}-${String(m).padStart(2, '0')}`);
   }
 
   const tbody = document.getElementById('incomeTableBody');
   if (sources.length === 0) {
-    tbody.innerHTML = `<tr><td colspan="8"><div class="empty-state">Chưa có thu nhập nào. Bấm "+ Thêm thu nhập"</div></td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="14"><div class="empty-state">Chưa có thu nhập nào. Bấm "+ Thêm thu nhập"</div></td></tr>`;
     return;
   }
 
   const rows = sources.map(src => {
-    const cols = months6.map(m => {
+    const cols = months12.map(m => {
       const amt = state.incomes.filter(i => i.source === src && i.month === m).reduce((s,i) => s+i.amount, 0);
       return `<td style="text-align:right;font-size:13px">${amt > 0 ? fmt(amt) : '<span style="color:var(--text3)">–</span>'}</td>`;
     });
@@ -1739,7 +1746,7 @@ function renderThunhap() {
   });
 
   // total row
-  const totals = months6.map(m => {
+  const totals = months12.map(m => {
     const amt = state.incomes.filter(i => i.month === m).reduce((s,i) => s+i.amount, 0);
     return `<td style="text-align:right;font-weight:600;color:var(--green)">${amt > 0 ? fmt(amt) : '–'}</td>`;
   });
